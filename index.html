@@ -3,27 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouHub - Checkpoint</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>YouHub - Key Reveal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #f1f1f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            width: 80%;
+            max-width: 400px;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        p {
+            font-size: 18px;
+        }
+        #countdown {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+        #continueButtonSection {
+            margin-top: 20px;
+            display: none;
+        }
+        #keySection {
+            display: none;
+            margin-top: 20px;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+        }
+        button {
+            background-color: #ffcc00;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #ff9900;
+        }
+    </style>
 </head>
 <body>
-    <div class="main-container">
-        <div class="content">
-            <h1>YouHub Key System - 0/1 Checkpoint</h1>
-
-            <!-- Waiting for 5 seconds -->
-            <div id="waitSection">
-                <p>Please wait for 5 seconds...</p>
-                <div id="countdown">5</div>
-            </div>
-
-            <!-- Button to proceed after 5 seconds -->
-            <div id="checkpointSection" style="display: none;">
-                <button id="checkpointButton">Proceed to LootLabs</button>
-            </div>
+    <div class="container">
+        <h1>Key Reveal</h1>
+        <p>Please complete the LootLabs task and come back here. You'll be able to get your key soon!</p>
+        <div id="countdownSection">
+            <p>Countdown: <span id="countdown">5</span> seconds</p>
+        </div>
+        <div id="continueButtonSection">
+            <button id="continueButton">Continue</button>
+        </div>
+        <div id="keySection">
+            <p>Your key is ready! Click below to copy it:</p>
+            <input type="text" id="keyInput" readonly>
+            <button id="copyButton">Copy Key</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Key options
+        const keys = [
+            "free_9XJD7PQLY3MZKNRBVUHWTAEL",
+            "free_V2MZPGA86NTRLDQXJCOBKAYF",
+            "free_1HTRKEU9WLZMXNAYQDGWBFTV",
+            "free_ZXC8TNV0QABDUHMWJESLYKRP",
+            "free_YQ2MHDPLB7KNVCGUXRZMEQTA",
+            "free_L3WKA9VZPEYUMTGXCDJRBNQH",
+            "free_N5BJRXD7UYMLCKTPQEVZHAWG",
+            "free_GH0LM8EKTCJUZNYXRDVWASQB",
+            "free_W7YFZ2URKNTPBHDXJQLMVEGA",
+            "free_TQ49VXEMG6YWAKDJRBHZULCN",
+            "free_MKU8YEZ3PLQBTXNGRVCWADHJ",
+            "free_AXR97VJELCZMNDTUPWGYHBQK",
+            "free_JZQ04KNSDTECBXHYRWLMGUVA",
+            "free_B68CNYTWMVQDAEKXPRZUJHGL",
+            "free_2KTXJMEY39VHCADLUBWRGZNP",
+            "free_UWLND0KVCXZQBRJTPMEAHGY7",
+            "free_CMHQR47BTXNKWZEJYGVLUDPA",
+            "free_H5LUMVNEGYZADBRXCWTKJQOP",
+            "free_DRP62VYM0JUXNCEKTGLBWAZH",
+            "free_QKX7BTZ9WDNAYEGLUPCRVMHJ",
+        ];
+
+        // Randomly pick a key
+        let availableKey = keys[Math.floor(Math.random() * keys.length)];
+
+        // Countdown for 5 seconds
+        let countdown = 5;
+        const countdownDisplay = document.getElementById('countdown');
+        const continueButtonSection = document.getElementById('continueButtonSection');
+        const keySection = document.getElementById('keySection');
+        const keyInput = document.getElementById('keyInput');
+
+        const countdownInterval = setInterval(() => {
+            countdownDisplay.textContent = countdown;
+            countdown--;
+            if (countdown < 0) {
+                clearInterval(countdownInterval);
+                countdownDisplay.style.display = 'none'; // Hide countdown
+                continueButtonSection.style.display = 'block'; // Show "Continue" button
+            }
+        }, 1000);
+
+        // When clicking "Continue", show the key
+        document.getElementById('continueButton').addEventListener('click', () => {
+            keySection.style.display = 'block'; // Show the key input section
+            keyInput.value = availableKey; // Set the key
+        });
+
+        // Function to copy the key to clipboard
+        document.getElementById('copyButton').addEventListener('click', () => {
+            keyInput.select();
+            document.execCommand("copy");
+            alert("Key copied to clipboard!");
+        });
+    </script>
 </body>
 </html>
